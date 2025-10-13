@@ -1,0 +1,11 @@
+### hash password
+GET http://localhost:3042/hash
+
+# $argon2id$v=19$m=65536,t=3,p=4$VIMpFqskIdr5bLiaDYV4xQ$ZodhKiqzLG6Nm8MjzOdIquFoKJilc80OwnRhVjOwtw0
+# $argon2id$v=19$m=65536,t=3,p=4$kmrZLtsUNW2qh1yjUMQqPg$m8REqLJw3fFWiqvg2/Cw6hlL37Wv52qr3oxtzh4kyY4
+
+### check hash
+POST http://localhost:3042/check
+Content-Type: application/json
+
+{"password" : "tota"}

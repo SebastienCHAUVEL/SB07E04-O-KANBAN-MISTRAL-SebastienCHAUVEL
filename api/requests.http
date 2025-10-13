@@ -1,0 +1,10 @@
+## récupération des lists
+GET http://localhost:3000/lists
+
+## création de liste
+POST http://localhost:3000/lists
+Content-Type: application/json
+
+{
+    "id": 3
+}

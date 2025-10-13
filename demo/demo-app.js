@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import argon2 from "argon2";
 
 const PORT = 3042;
 
@@ -67,6 +68,32 @@ app.use("/countries", (req, res) => {
     ];
     res.json(countries);
 });
+
+app.get("/hash", async (req, res) => {
+    // récupérer le mot de passe fournit dans la requete HTTP
+    const clearPassword = 'toto';
+
+    // hasher le mot de passe
+    const hashedPassword =  await argon2.hash(clearPassword);
+    console.log(hashedPassword);
+
+    res.send('ok');
+    // enregistrer le mot de passe hashé en BDD
+});
+
+app.post("/check", async (req, res) => {
+    const clearPassword = req.body.password;
+
+    console.log(clearPassword);
+    // le hashed password est à récupérer depuis la BDD
+    const hashedPassword = '$argon2id$v=19$m=65536,t=3,p=4$VIMpFqskIdr5bLiaDYV4xQ$ZodhKiqzLG6Nm8MjzOdIquFoKJilc80OwnRhVjOwtw0'
+
+    // hasher le mot de passe
+    const passwordIsValid =  await argon2.verify(hashedPassword, clearPassword);
+    console.log(passwordIsValid ? 'mot de passe valide' : 'mot de passe KO');
+    res.send('fin');
+});
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
