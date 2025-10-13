@@ -14,3 +14,11 @@
 
 - Surveillance
   - journal d'accès ( vérifier qui à accéder )
+
+## CORS
+
+Cross Origin Request Sharing : permet de limiter l'accès aux ressources d'un serveur depuis un autre site web.
+
+Cela est configurable depuis le serveur qui contient la donnée.
+
+Avec express, comme souvent, il existe un middleware pour gérer les CORS.
