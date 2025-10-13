@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('load_country_btn').addEventListener('click', handleLoadCountryBtnClick)
+        })
+        async function handleLoadCountryBtnClick()
+        {
+            const countryListText = await fetch('http://localhost:3042/countries');
+            const countryList = await countryListText.json();
+
+            const countryListEl = document.getElementById('country_list');
+            countryListEl.innerHTML = '';
+            for (const currentCountry of countryList)
+            {
+                const newCountryEl = document.createElement('li');
+                newCountryEl.textContent = currentCountry.name;
+
+                countryListEl.append(newCountryEl);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="load_country_btn">Charger les pays</button>
+    <ul id="country_list">
+
+    </ul>
+</body>
+</html>
