@@ -2,6 +2,7 @@ import { List, Card, Tag } from '../models/index.js';
 import { StatusCodes } from 'http-status-codes';
 
 export async function getAll(req, res) {
+  console.log('dans list/getAll : ' + req.userId);
   // 1 récupérer les données fournies => rien n'est fourni
 
   // 2 préparer les données demandées ( SQL,  calcul, services )

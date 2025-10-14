@@ -9,6 +9,8 @@ Content-Type: application/json
 }
 
 ### Login
+## token admin : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3NjA0NDU2MjksImV4cCI6MTc2MDQ2MDAyOX0.SxTPHdAwSHueO_ngIDO5kVcJ9ZW42CVc9061t-5NutY
+## token user : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA0NDU1OTEsImV4cCI6MTc2MDQ1OTk5MX0.6z3Fhc23io0Pa86TMtHrUxA_NLbyMDI9DVUilckdgf0
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -18,7 +20,11 @@ Content-Type: application/json
 }
 
 ### récupération des lists
+## pour envoyer un token dans une requete HTTP, on ajoute un header
+## avec pour clef ̀ Authorization` 
+## et comme valeur `Bearer ` suivi du token
 GET http://localhost:3000/lists
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3NjA0NDU2MjksImV4cCI6MTc2MDQ2MDAyOX0.SxTPHdAwSHueO_ngIDO5kVcJ9ZW42CVc9061t-5NutY
 
 ### création de liste
 POST http://localhost:3000/lists

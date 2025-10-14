@@ -6,6 +6,7 @@ import listRoutes from "./routes/list.routes.js";
 import cardRoutes from "./routes/card.routes.js";
 import tagRoutes from "./routes/tag.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import { checkJWTToken } from "./middlewares/auth.middleware.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +17,16 @@ const app = express();
 // par défaut il autorise l'accès depuis toutes les URLs
 app.use(cors());
 app.use(express.json());
+
+// on pense à mettre cette route avant la validation des token
+// car l'utilisateur n'a; à priori, pas de token
+app.use("/auth", authRoutes);
+
+// middleware qui vérifie le token jwt et récupère l'utilisateur si nécessaire
+app.use(checkJWTToken);
+// après ce middleware, on est sur que l'utilisateur est passé par l'authentification
+// et qu'il a un token valide
+// dans toutes les routes suivantes, on a un req.userId qui est disponible
 
 app.use("/lists", listRoutes);
 /*
@@ -43,11 +54,10 @@ app.use("/lists", listRoutes);
   router.post('/', validateListCreation, create);
   router.patch('/:id', validateId, validateListUpdate, update);
   router.delete('/:id', validateId, deleteById);
-*/
-app.use("/cards", cardRoutes);
-app.use("/tags", tagRoutes);
-app.use("/auth", authRoutes);
-
+  */
+ app.use("/cards", cardRoutes);
+ app.use("/tags", tagRoutes);
+ 
 app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
