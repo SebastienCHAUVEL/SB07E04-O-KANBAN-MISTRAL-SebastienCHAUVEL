@@ -10,6 +10,8 @@ app.use(cors({origin: "http://localhost"}));
 app.use(express.json());
 
 app.use("/countries", (req, res) => {
+    // 1 récupérer les données fournies
+    // 2 récupérer les données demandées
     const countries = [
     {
         "name": "France",
@@ -66,6 +68,7 @@ app.use("/countries", (req, res) => {
         "flag": "https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg"
     }
     ];
+    // 3 fournir une réponse
     res.json(countries);
 });
 
