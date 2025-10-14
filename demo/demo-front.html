@@ -7,6 +7,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('load_country_btn').addEventListener('click', handleLoadCountryBtnClick)
+            document.getElementById('login_form').addEventListener('submit', handleLoginFormSubmit)
         })
         async function handleLoadCountryBtnClick()
         {
@@ -23,6 +24,18 @@
                 countryListEl.append(newCountryEl);
             }
         }
+        async function handleLoginFormSubmit(event)
+        {
+            event.preventDefault();
+            const form = event.currentTarget;
+
+            const responseText = await fetch('http://localhost:3042/login', {
+                "method": "POST",
+                body: JSON.stringify({username: form.username, password: form.password})
+            });
+            const response = await responseText.json();
+            console.log(response);
+        }
     </script>
 </head>
 <body>
@@ -30,5 +43,10 @@
     <ul id="country_list">
 
     </ul>
+    <form method="post">
+        <input type="text" placeholder="Identifiant" id="username">
+        <input type="password" placeholder="Mot de passe" id="password">
+        <button>Se Connecter</button>
+    </form>
 </body>
 </html>

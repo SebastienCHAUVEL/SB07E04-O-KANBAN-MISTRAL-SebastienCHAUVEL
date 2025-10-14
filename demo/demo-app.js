@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import argon2 from "argon2";
+import jwt from "jsonwebtoken";
 
 const PORT = 3042;
 
@@ -97,6 +98,20 @@ app.post("/check", async (req, res) => {
     res.send('fin');
 });
 
+app.post("/login", async (req, res) => {
+    const clearPassword = req.body.password;
+    const login = req.body.login
+
+    // récupération de l'utilisateur en BDD
+    const userInBD = {login: "toto", mdp: "$argon2id$v=19$m=65536,t=3,p=4$VIMpFqskIdr5bLiaDYV4xQ$ZodhKiqzLG6Nm8MjzOdIquFoKJilc80OwnRhVjOwtw0"}
+
+    const passwordIsValid =  await argon2.verify(hashedPassword, clearPassword);
+    if (passwordIsValid)
+    {
+        jwt.sign({username: "toto"}, JWT_SECRET)
+        res.send()
+    }
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
