@@ -1,11 +1,15 @@
 export const authStore = $state({ user: null, token: null });
 
 export const setAuth = (user, token) => {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
   authStore.user = user;
   authStore.token = token;
 };
 
 export const clearAuth = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
   authStore.user = null;
   authStore.token = null;
 };

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export function checkJWTToken(req, res, next) {
     console.log('verification du token');
     const authHeader = req.headers.authorization;
-    if (! authHeader.startsWith('Bearer')) {
+    if (! authHeader || ! authHeader.startsWith('Bearer')) {
         return res.status(StatusCodes.UNAUTHORIZED).json({error: "JSON token required"})
     }
     console.log(authHeader);
