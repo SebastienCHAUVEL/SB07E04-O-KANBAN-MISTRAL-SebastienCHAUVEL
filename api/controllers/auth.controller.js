@@ -42,3 +42,35 @@ export async function registerUser(req, res) {
         throw new Error("Internal Server Error !");
     }
 }
+
+export async function login (req, res) {
+    // 1. récupérer le usernameForm et le mdpForm ( en clair) fournit par l'utilisateur
+    const { username, password } = req.body;
+
+    // 2. récupérer depuis la BDD le user correspondant au usernameForm fourni
+    const user = await User.findOne({where: {username}});
+
+    const errorMsg = "Login and Password does not match";
+    // 3. si l'utilisateur n'existe pas => renvoyer une erreur
+    if (!user) {
+        console.log('user not found');
+        return res.status(StatusCodes.UNAUTHORIZED).json({ 
+            error: errorMsg
+        })
+    }
+    // comparer les mdp avec argon2.verify() cf demo-app.js
+    const passwordIsValid = await argon2.verify(user.password, password);
+    // si les mots de passe ne correspondent pas => renvoyer une erreur
+    if (! passwordIsValid) {
+        console.log('invalid password');
+        return res.status(StatusCodes.UNAUTHORIZED).json({ 
+            error: errorMsg
+        });
+    }
+
+    // l'utilisateur est identifié
+    console.log('identification réussie');
+    // créer un token jwt
+    // et le fournir 
+    res.json({msg: "authent réussie"});
+}
