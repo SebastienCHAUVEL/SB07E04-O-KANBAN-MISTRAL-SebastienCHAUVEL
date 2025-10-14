@@ -2,6 +2,7 @@
 import { Card } from "./card.model.js";
 import { List } from "./list.model.js";
 import { Tag } from "./tag.model.js";
+import { User } from "./user.model.js";
 import { sequelize } from "./sequelize.client.js";
 
 
@@ -34,4 +35,4 @@ Tag.belongsToMany(Card, {
 
 
 // Exporter nos modèles
-export { Card, List, Tag, sequelize };
+export { Card, List, Tag, User, sequelize };
