@@ -5,6 +5,7 @@ import { errorHandler } from "./middlewares/common.middleware.js";
 import listRoutes from "./routes/list.routes.js";
 import cardRoutes from "./routes/card.routes.js";
 import tagRoutes from "./routes/tag.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -45,6 +46,7 @@ app.use("/lists", listRoutes);
 */
 app.use("/cards", cardRoutes);
 app.use("/tags", tagRoutes);
+app.use("/auth", authRoutes);
 
 app.use(errorHandler);
 app.listen(PORT, () => {

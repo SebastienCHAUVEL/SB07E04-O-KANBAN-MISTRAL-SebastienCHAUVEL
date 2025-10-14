@@ -1,7 +1,17 @@
-## récupération des lists
+### Registration
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "username": "username",
+    "password": "password",
+    "validation": "password2"
+}
+
+### récupération des lists
 GET http://localhost:3000/lists
 
-## création de liste
+### création de liste
 POST http://localhost:3000/lists
 Content-Type: application/json
 
