@@ -9,13 +9,3 @@ export function validateRegisterFields(req, res, next) {
     });
     checkBody(createUserSchema, req.body, res, next);
 }
-
-export function validateCardUpdate(req, res, next) {
-    const updateCardSchema = Joi.object({
-        content: Joi.string(),
-        position: Joi.number(),
-        color: Joi.string(),
-        list_id: Joi.number()
-    });
-    checkBody(updateCardSchema, req.body, res, next);
-}
