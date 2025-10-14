@@ -7,7 +7,7 @@ export async function registerUser(req, res) {
     // récupérer les infos fournies (login / mdp / validation)
     const { username, password, validation } = req.body;
     console.log(username, password, validation);
-        // valider les données
+        // valider les données ( JOI ) fait avec un middleware
         // vérifier que mot de passe et validation sont identique
         // vérifier que l'utilisateur n'existe pas
     // hasher le mot de passe
