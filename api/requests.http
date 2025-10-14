@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "username": "username",
     "password": "password",
-    "validation": ""
+    "validation": "password"
 }
 
 ### récupération des lists

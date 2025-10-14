@@ -9,27 +9,36 @@ export async function registerUser(req, res) {
     console.log(username, password, validation);
         // valider les données ( JOI ) fait avec un middleware
         // vérifier que mot de passe et validation sont identique
+    if (password !== validation)
+    {
+        return res.status(StatusCodes.BAD_REQUEST).json({ 
+            error: "Password and validation must match"
+        });
+    }
         // vérifier que l'utilisateur n'existe pas
-    // hasher le mot de passe
-    const hashedPassword = await argon2.hash(password);
-
-    console.log(hashedPassword);
-    // créer l'utilisateur
-    const createdUser = await User.create({username, password: hashedPassword});
-
-    // renvoyer l'utilisateur créé
-    // res.json({...createdUser, password: undefined});
-    return res.status(StatusCodes.CREATED).json({id: createdUser.id, username: createdUser.username});
-
-    // try {
-    //     const tag = await Tag.create(req.body)
-    //     return res.status(StatusCodes.CREATED).json(tag);
-    // } catch (error) {
-    //     if (error.name === 'SequelizeUniqueConstraintError') {
-    //         return res.status(StatusCodes.CONFLICT).json({ 
-    //             error: error.errors[0].message || "Duplicate entry"
-    //         });
-    //     }
-    //     throw new Error("Internal Server Error !");
-    // }
+        /*
+        récupérer un utilisateur par le username fournit
+        si  il existe alors renvoyer une erreur
+        */
+    try {
+    
+        // hasher le mot de passe
+        const hashedPassword = await argon2.hash(password);
+    
+        console.log(hashedPassword);
+        // créer l'utilisateur
+        const createdUser = await User.create({username, password: hashedPassword});
+    
+        // renvoyer l'utilisateur créé
+        // res.json({...createdUser, password: undefined});
+        return res.status(StatusCodes.CREATED).json({id: createdUser.id, username: createdUser.username});
+    } catch (error) {
+        console.log(error);
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(StatusCodes.CONFLICT).json({ 
+                error: "Duplicate entry"
+            });
+        }
+        throw new Error("Internal Server Error !");
+    }
 }
