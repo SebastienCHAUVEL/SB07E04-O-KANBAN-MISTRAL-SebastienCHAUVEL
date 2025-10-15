@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ### Login
 ## token admin : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3NjA1MTI1NjgsImV4cCI6MTc2MDUyNjk2OH0.hnqN57LjbjD2HOUrKLYoGXnY1V3beTQp42f3BPm376E
-## token user : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MTgyODgsImV4cCI6MTc2MDUzMjY4OH0.cK2XQvd-5dq-mS1tY8HfdOKtypFxahW8b_jcVnbea7Y
+## token user : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MzY3NTYsImV4cCI6MTc2MDU1MTE1Nn0.hQkaowOkgXHQW0v2mIs9P3RqnHJFQCf20X9HzaYav4k
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 ## avec pour clef ̀ Authorization` 
 ## et comme valeur `Bearer ` suivi du token
 GET http://localhost:3000/lists
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MTgyODgsImV4cCI6MTc2MDUzMjY4OH0.cK2XQvd-5dq-mS1tY8HfdOKtypFxahW8b_jcVnbea7Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MzY3NTYsImV4cCI6MTc2MDU1MTE1Nn0.hQkaowOkgXHQW0v2mIs9P3RqnHJFQCf20X9HzaYav4k
 
 ### LIST ADMIN
 GET http://localhost:3000/lists
@@ -41,3 +41,17 @@ Content-Type: application/json
 ### auth/me
 GET http://localhost:3000/auth/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3NjA1MTI1NjgsImV4cCI6MTc2MDUyNjk2OH0.hnqN57LjbjD2HOUrKLYoGXnY1V3beTQp42f3BPm376E
+
+
+
+### création de liste
+POST http://localhost:3000/lists
+Content-Type: application/json
+
+{
+    "id": 3
+}
+
+### route /users limitée aux admins uniquement
+GET http://localhost:3000/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MzY3NTYsImV4cCI6MTc2MDU1MTE1Nn0.hQkaowOkgXHQW0v2mIs9P3RqnHJFQCf20X9HzaYav4k

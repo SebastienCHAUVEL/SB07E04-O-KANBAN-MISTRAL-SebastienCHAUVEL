@@ -59,6 +59,10 @@ Ici on va créer une route /login qui attend un username et un password, et qui 
 
 Une fois l'authentification réussie, on fournit au client une preuve de son authentification, on dit que l'on connecte l'utilisateur.
 
+### oAuth
+
+
+
 ## Connexion
 
 ### Cas du SSR

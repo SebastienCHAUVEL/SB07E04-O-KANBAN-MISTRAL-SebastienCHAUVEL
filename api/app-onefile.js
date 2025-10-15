@@ -8,6 +8,7 @@ import tagRoutes from "./routes/tag.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import { checkJWTToken } from "./middlewares/auth.middleware.js";
+import Joi from "joi";
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,7 +22,23 @@ app.use(express.json());
 
 // on pense à mettre cette route avant la validation des token
 // car l'utilisateur n'a; à priori, pas de token
-app.use("/auth", authRoutes);
+// app.use("/auth", authRoutes);
+
+app.post('/auth/register', (req, res, next) => {
+    const createUserSchema = Joi.object({
+        username: Joi.string().required(),
+        password: Joi.string().required(),
+        validation: Joi.string().required(),
+    });
+     const validation = createUserSchema.validate(req.body);
+      if (validation.error) {
+          res.status(StatusCodes.BAD_REQUEST).send(validation.error);
+          return;
+      }
+      next();
+}, registerUser);
+app.post('/auth/login', login);
+app.get('/auth/me', (req, res, next) => {}, checkAuthorization(['admin', 'user']), userProfile)
 
 // middleware qui vérifie le token jwt et récupère l'utilisateur si nécessaire
 app.use(checkJWTToken);
