@@ -2,6 +2,8 @@
 import { Card } from "./card.model.js";
 import { List } from "./list.model.js";
 import { Tag } from "./tag.model.js";
+import { User } from "./user.model.js";
+import { Role } from "./role.model.js";
 import { sequelize } from "./sequelize.client.js";
 
 
@@ -32,6 +34,18 @@ Tag.belongsToMany(Card, {
   foreignKey: "tag_id"
 });
 
+// List <--> Card (One-to-Many)
+Role.hasMany(User, {
+  as: "users", 
+  foreignKey: {
+    name: "role_id",
+    allowNull: false,
+  }
+});
+User.belongsTo(Role, {
+  as: "role",
+  foreignKey: "role_id"
+});
 
 // Exporter nos modèles
-export { Card, List, Tag, sequelize };
+export { Card, List, Role, Tag, User, sequelize };

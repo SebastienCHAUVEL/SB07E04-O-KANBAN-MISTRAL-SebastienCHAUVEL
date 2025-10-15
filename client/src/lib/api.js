@@ -1,9 +1,17 @@
+/**
+ * Make an http request to the api and return the fetched data
+ * 
+ * @param {*} endpoint 
+ * @param {*} method 
+ * @param {*} body 
+ * @returns 
+ */
 export default async function api(endpoint, method = "GET", body) {
   const response = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
     method,
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(body),
   });

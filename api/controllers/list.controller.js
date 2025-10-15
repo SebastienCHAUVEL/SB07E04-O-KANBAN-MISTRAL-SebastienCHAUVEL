@@ -1,7 +1,11 @@
-import { List, Card, Tag } from '../models/index.js';
+import { List, Card, Tag, User } from '../models/index.js';
 import { StatusCodes } from 'http-status-codes';
 
 export async function getAll(req, res) {
+  console.log('dans list/getAll : ' + req.userId);
+  // 1 récupérer les données fournies => rien n'est fourni
+
+  // 2 préparer les données demandées ( SQL,  calcul, services )
   const includeOptions = [];
   const includes = req.query.include ? req.query.include.split(',') : [];
 
@@ -18,11 +22,17 @@ export async function getAll(req, res) {
   const lists = await List.findAll({
     include: includeOptions
   });
+
+  // 3 renvoyer les données demandées
   res.status(StatusCodes.OK).json(lists);
 }
 
 export async function create(req, res) {
+  // 1. données fournies
+  // un objet dans req.body
+  // 2 . traitement des données => ici insertion en BDD
   const list = await List.create(req.body);
+  // 3. Renvoyer une réponse 
   res.status(StatusCodes.CREATED).json(list);
 }
 

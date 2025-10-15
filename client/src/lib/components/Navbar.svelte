@@ -19,9 +19,9 @@
     try {
       const { token, user } = await loginUser({ username, password });
 
-      // setAuth(user, token);
+      setAuth(user, token);
 
-      setAuth(username, token);
+      // setAuth(username, token);
 
       const modal = document.getElementById(`login`);
       modal.close(); // Close the modal after adding the list
@@ -37,10 +37,11 @@
     const formData = new FormData(e.target);
     const username = formData.get("username");
     const password = formData.get("password");
+    const validation = formData.get("validation");
 
     try {
       // Call your API to register the user
-      await registerUser({ username, password });
+      await registerUser({ username, password, validation });
 
       const modal = document.getElementById(`register`);
       modal.close(); // Close the modal after adding the list
@@ -56,19 +57,19 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <!-- {#if !isAuthenticated()} -->
+      {#if !isAuthenticated()}
       <li>
         <button onclick={() => openModal(`register`)}>Inscription</button>
       </li>
       <li>
         <button onclick={() => openModal(`login`)}>Connexion</button>
       </li>
-      <!-- {:else}
+      {:else}
         <li>
           Hello, {authStore.user.username || "undefined"} !
           <button onclick={clearAuth}>Déconnexion</button>
         </li>
-      {/if} -->
+      {/if}
     </ul>
   </div>
 </div>
@@ -88,6 +89,13 @@
           name="password"
           class="input mb-4"
           placeholder="Mot de passe"
+          required
+        />
+        <input
+          type="validation"
+          name="validation"
+          class="input mb-4"
+          placeholder="Validation du mot de passe"
           required
         />
         <div class="flex justify-center">

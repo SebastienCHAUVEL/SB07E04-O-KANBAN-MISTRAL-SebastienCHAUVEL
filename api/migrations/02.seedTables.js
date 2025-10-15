@@ -2,7 +2,7 @@ import { Card, List, Tag, sequelize } from "../models/index.js";
 
 console.log("🚧 Ajout de listes de test...");
 const shoppingList  = await List.create({ title: "Liste des courses", position: 1 });
-const studentsList  = await List.create({ title: "Liste des apprennants", position: 3 });
+const studentsList  = await List.create({ title: "Liste des apprenants", position: 3 });
 const birthdaysList = await List.create({ title: "Liste des anniversaires", position: 2 });
 
 console.log("🚧 Ajout de cartes de test...");
