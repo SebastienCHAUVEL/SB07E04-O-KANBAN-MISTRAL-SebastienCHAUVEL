@@ -10,7 +10,7 @@
 - Authentification ( qui es tu ? )
   - on obtient une preuve de notre authentification
     - token JWT
-    - Session
+    - Session + cookie
 - Autorisation
   - qui peut accéder à quoi
 
@@ -66,3 +66,5 @@ Une fois l'authentification réussie, on fournit au client une preuve de son aut
 Si notre application génère le HTML alors on est sur que le client sera un navigateur.
 
 Du coup on pourra mettre en place des sessions pour connecter l'utilisateur.
+
+Si on est dans le cas d'une API, on peut utiliser les token JWT pour connecter l'utilisateur.

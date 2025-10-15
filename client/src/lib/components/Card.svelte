@@ -60,9 +60,10 @@
   class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center relative"
 >
   <div class="markdown-body">
-    <Markdown md={card.content} />
+    <!-- <Markdown md={card.content} /> -->
+    {@html card.content}
   </div>
-  <!-- {#if authStore.user.role.name === "admin"} -->
+  {#if authStore.user.role === "admin"}
   <div
     class={`flex gap-2 absolute right-2 items-center h-full ${hovered ? "opacity-100" : "opacity-0"}`}
   >
@@ -107,5 +108,5 @@
       handleConfirm={handleDeleteCard}
     />
   </div>
-  <!-- {/if} -->
+  {/if}
 </div>

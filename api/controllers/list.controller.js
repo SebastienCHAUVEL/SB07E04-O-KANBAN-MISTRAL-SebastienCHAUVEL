@@ -1,4 +1,4 @@
-import { List, Card, Tag } from '../models/index.js';
+import { List, Card, Tag, User } from '../models/index.js';
 import { StatusCodes } from 'http-status-codes';
 
 export async function getAll(req, res) {
