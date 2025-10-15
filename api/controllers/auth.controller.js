@@ -2,6 +2,7 @@ import { User } from '../models/user.model.js';
 import { StatusCodes } from 'http-status-codes';
 import  argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+import { Role } from '../models/role.model.js';
 
 export async function registerUser(req, res) {
 
@@ -16,19 +17,21 @@ export async function registerUser(req, res) {
             error: "Password and validation must match"
         });
     }
-        // vérifier que l'utilisateur n'existe pas
-        /*
-        récupérer un utilisateur par le username fournit
-        si  il existe alors renvoyer une erreur
-        */
+    // vérifier que l'utilisateur n'existe pas
+    /*
+    récupérer un utilisateur par le username fournit
+    si  il existe alors renvoyer une erreur
+    */
     try {
     
         // hasher le mot de passe
         const hashedPassword = await argon2.hash(password);
     
         console.log(hashedPassword);
+        // récupération du role user pour l'associer par défaut à l'utilisateur
+        const roleUser = await Role.findOne({where: {'name': 'user'}})
         // créer l'utilisateur
-        const createdUser = await User.create({username, password: hashedPassword});
+        const createdUser = await User.create({username, password: hashedPassword, role_id: roleUser.id});
     
         // renvoyer l'utilisateur créé
         // res.json({...createdUser, password: undefined});
@@ -88,7 +91,7 @@ export async function userProfile (req, res) {
     // qu'est ce qu'on a à disposition ? userId 
     // 
     // const user = await User.findByPk(req.userId, {exclude: ['password']});
-    const user = await User.findByPk(req.userId);
+    const user = await User.findByPk(req.userId, {include: 'role'});
     if (! user)
     {
         return res.status(StatusCodes.NOT_FOUND).json({error: "User not found"});
@@ -101,5 +104,5 @@ export async function userProfile (req, res) {
     //     password: user.dataValues.password, 
     //     password: undefined, 
     // })
-    return res.json({...user.dataValues, password: undefined});
+    return res.json({...user.dataValues, password: undefined, role: user.role.name});
 }
