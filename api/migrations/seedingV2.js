@@ -1,4 +1,4 @@
-import { Card, List, Tag, User } from "../models/index.js";
+import { Card, List, Role, Tag, User } from "../models/index.js";
 import { sequelize } from "../models/sequelize.client.js";
 import argon2 from "argon2";
 
@@ -48,11 +48,16 @@ async function seedDatabase() {
   const adminPassword = await argon2.hash('admin');
   const userPassword = await argon2.hash('user');
 
+  console.log("🔄 creating roles ...");
+  // const adminRole = await Role.create({name: 'admin'});
+  // const userRole = await Role.create({name: 'user'});
+
   console.log("🔄 creating users ...");
   await User.bulkCreate([
-    { username: 'admin', password: adminPassword},
-    { username: 'user', password: userPassword}
-  ]);
+    { username: 'admin', password: adminPassword, role: {name: 'admin'}},
+    { username: 'user', password: userPassword, role: {name: 'user'}}
+  ], 
+  { include: 'role' });
 
   console.log("✅ Okanban seed done with success !");
   
