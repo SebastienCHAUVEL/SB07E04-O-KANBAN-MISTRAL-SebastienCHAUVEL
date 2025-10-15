@@ -9,6 +9,8 @@
     - enregistrement par un admin
 - Authentification ( qui es tu ? )
   - on obtient une preuve de notre authentification
+    - token JWT
+    - Session
 - Autorisation
   - qui peut accéder à quoi
 

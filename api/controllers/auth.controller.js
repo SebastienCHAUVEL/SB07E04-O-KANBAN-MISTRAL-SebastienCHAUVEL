@@ -80,3 +80,26 @@ export async function login (req, res) {
     // et le fournir au client
     res.json({token: token});
 }
+
+export async function userProfile (req, res) {
+    // qu'est ce que je veux ? récupérer les info du user connecté
+    // ou est l'information ? en BDD
+
+    // qu'est ce qu'on a à disposition ? userId 
+    // 
+    // const user = await User.findByPk(req.userId, {exclude: ['password']});
+    const user = await User.findByPk(req.userId);
+    if (! user)
+    {
+        return res.status(StatusCodes.NOT_FOUND).json({error: "User not found"});
+    }
+
+    // le spread operator "étale" les propriétés d'un objet
+    // return res.json({
+    //     id: user.dataValues.id, 
+    //     username: user.dataValues.username, 
+    //     password: user.dataValues.password, 
+    //     password: undefined, 
+    // })
+    return res.json({...user.dataValues, password: undefined});
+}

@@ -19,7 +19,6 @@
     try {
       const { token, user } = await loginUser({ username, password });
 
-      console.log(username, token);
       setAuth(user, token);
 
       // setAuth(username, token);
@@ -27,7 +26,7 @@
       const modal = document.getElementById(`login`);
       modal.close(); // Close the modal after adding the list
 
-      // window.location.reload();
+      window.location.reload();
     } catch (e) {
       form.error = "Une erreur est survenue lors de la connexion.";
     }
