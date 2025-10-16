@@ -1,7 +1,7 @@
 <script>
   import { Trash2, Pen, SpellCheck, Languages } from "@lucide/svelte";
   import { deleteCard, updateCard } from "../services/card.service.js";
-  import { spellCheck } from "../services/common.service.js";
+  import { spellCheck, translate } from "../services/common.service.js";
   import Markdown from "svelte-exmarkdown";
   import { form } from "../store/form.svelte";
   import ModalForm from "./modals/ModalForm.svelte";
@@ -57,6 +57,28 @@
         "Une erreur s'est produite lors de la correction de la carte.";
     }
   };
+  const handleTranslate = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const lang = formData.get("lang");
+    try {
+      const response = await translate(card.content, lang);
+      const updatedCard = await updateCard({
+        id: card.id,
+        content: response.text,
+      });
+
+      card.content = updatedCard.content;
+
+      e.target.reset();
+
+      const modal = document.getElementById(`translate-card-${card.id}`);
+      modal.close(); // Close the modal after adding the card
+    } catch (e) {
+      form.error =
+        "Une erreur s'est produite lors de la traduction de la carte.";
+    }
+  };
 </script>
 
 <div
@@ -84,28 +106,29 @@
       class={`flex gap-2 absolute right-2 items-center h-full ${hovered ? "opacity-100" : "opacity-0"}`}
     >
       <button
-        onclick={handleSpellCheck}
-        class="bg-orange-500 text-white h-[50px] px-2 py-1 rounded"
+        onclick={() => openModal(`translate-card-${card.id}`)}
+        class="bg-yellow-900 text-white h-[40px] px-2 py-1 rounded"
       >
-        <SpellCheck />
-      </button>
-      <button
-        onclick={() => openModal(`edit-card-${card.id}`)}
-        class="bg-yellow-500 text-white h-[50px] px-2 py-1 rounded"
-      >
-        <Pen />
+        <Languages />
       </button>
       <ModalForm
-        title="Modifier la carte"
-        modalId={`edit-card-${card.id}`}
+        title="Traduire la carte"
+        modalId={`translate-card-${card.id}`}
         msg=""
       >
         <div class="flex flex-col gap-2">
-          <form onsubmit={editCard}>
-            <textarea class="textarea" name="text">{card.content}</textarea>
+          <form onsubmit={handleTranslate}>
+            <label for="lang">Langue</label>
+            <input
+              type="text"
+              class="input"
+              name="lang"
+              placeholder="Langue ISO 639-1 (ex: fr, en)"
+              required
+            />
             <div class="flex justify-center">
               <button class="bg-blue-500 text-white px-2 py-1 rounded"
-                >Modifier</button
+                >Choisir</button
               >
             </div>
           </form>
@@ -119,8 +142,43 @@
         </div>
       </ModalForm>
       <button
+        onclick={handleSpellCheck}
+        class="bg-orange-500 text-white h-[40px] px-2 py-1 rounded"
+      >
+        <SpellCheck />
+      </button>
+      <button
+        onclick={() => openModal(`edit-card-${card.id}`)}
+        class="bg-yellow-500 text-white h-[40px] px-2 py-1 rounded"
+      >
+        <Pen />
+      </button>
+      <ModalForm
+        title="Modifier la carte"
+        modalId={`edit-card-${card.id}`}
+        msg=""
+      >
+        <div class="flex flex-col gap-2">
+          <form onsubmit={editCard}>
+            <textarea class="textarea" name="text">{card.content}</textarea>
+            <div class="flex justify-center">
+              <button class="bg-blue-500 text-white px-2 py-1 rounded"
+                >Modifier
+              </button>
+            </div>
+          </form>
+          <form method="dialog">
+            <div class="flex justify-center">
+              <button class="bg-red-500 text-white px-2 py-1 rounded"
+                >Annuler</button
+              >
+            </div>
+          </form>
+        </div>
+      </ModalForm>
+      <button
         onclick={() => openModal(`confirm-delete-card-${card.id}`)}
-        class="bg-red-500 text-white px-2 py-1 rounded h-[50px]"
+        class="bg-red-500 text-white px-2 py-1 rounded h-[40px]"
       >
         <Trash2 />
       </button>
