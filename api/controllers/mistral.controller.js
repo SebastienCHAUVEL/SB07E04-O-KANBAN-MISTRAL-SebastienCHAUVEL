@@ -14,7 +14,7 @@ export async function spellChecker(req, res) {
   console.log(text);
 
   const mistralResponse = await askMistral(
-    `Peux-tu corriger les fautes d'orthographe dans le texte suivant en me fournissant **uniquement** le texte corrigé dans ta réponse :  "${text}"`,
+    `Peux-tu corriger les fautes d'orthographe dans le texte suivant en me fournissant **uniquement** le texte corrigé dans ta réponse :  '${text}'`,
     res
   );
 
@@ -26,7 +26,7 @@ export async function translater(req, res) {
   console.log(text);
 
   const mistralResponse = await askMistral(
-    `Peux-tu traduire le texte suivant en me fournissant **uniquement** le texte traduit dans ta réponse en langue "${lang}" : "${text}"`,
+    `Peux-tu traduire le texte suivant en me fournissant dans ta réponse uniquement le texte traduit en langue '${lang}'(pas de voici la traduction ou autres phrases d'introduction) : '${text}'`,
     res
   );
 

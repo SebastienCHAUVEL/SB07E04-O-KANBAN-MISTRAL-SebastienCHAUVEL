@@ -20,6 +20,7 @@ router.post(
   spellCheckSchema,
   spellChecker
 );
+console.log("test");
 router.post(
   "/translate",
   checkAuthorization(["admin"]),

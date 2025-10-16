@@ -16,11 +16,14 @@ export function spellCheckSchema(req, res, next) {
 }
 
 export function translaterSchema(req, res, next) {
+  console.log("middleware");
   const translaterSchema = Joi.object({
     text: Joi.string().required(),
     lang: Joi.string()
       .pattern(/^[a-zA-Z]{2}$/)
       .required(),
   });
+  console.log("translaterSchema");
+
   checkBody(translaterSchema, req.body, res, next);
 }
