@@ -7,6 +7,7 @@ import cardRoutes from "./routes/card.routes.js";
 import tagRoutes from "./routes/tag.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import mistralRoutes from "./routes/mistral.routes.js";
 import { checkJWTToken } from "./middlewares/auth.middleware.js";
 
 const PORT = process.env.PORT || 3000;
@@ -56,14 +57,15 @@ app.use("/lists", listRoutes);
   router.patch('/:id', validateId, validateListUpdate, update);
   router.delete('/:id', validateId, deleteById);
   */
- app.use("/cards", cardRoutes);
- app.use("/tags", tagRoutes);
+app.use("/cards", cardRoutes);
+app.use("/tags", tagRoutes);
 //  ajouter une route /users en GET qui renvoie tous les utilisateurs ( sans les mots de passe )
 //  seuls les admins peuvent y accéder
 app.use("/users", userRoutes);
 
+// routes liées à mistral
+app.use(mistralRoutes);
 
- 
 app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);

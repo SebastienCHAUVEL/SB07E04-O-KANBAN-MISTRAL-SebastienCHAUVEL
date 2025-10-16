@@ -15,8 +15,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "user",
-    "password": "user"
+    "username": "username",
+    "password": "password"
 }
 
 ### récupération des lists
@@ -55,3 +55,12 @@ Content-Type: application/json
 ### route /users limitée aux admins uniquement
 GET http://localhost:3000/users/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MzY3NTYsImV4cCI6MTc2MDU1MTE1Nn0.hQkaowOkgXHQW0v2mIs9P3RqnHJFQCf20X9HzaYav4k
+
+### Mistral prompt
+POST http://localhost:3000/prompt
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiaWF0IjoxNzYwNjAyMjU4LCJleHAiOjE3NjA2MTY2NTh9.zvW4kW4pAeCtDGczpzOroubD_mxO70i9lylAWAWLs9I
+
+{
+    "prompt": "Explain the theory of relativity in simple terms."
+}
