@@ -22,8 +22,10 @@ export async function askMistral(req, res) {
       }),
     }
   );
+  console.log(response);
   if (!response.ok) {
     const details = await response.text();
+    console.error("Mistral API error:", details);
     return res
       .status(response.status)
       .json({ error: true, message: response.statusText, details });
