@@ -14,8 +14,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-console.log("start");
-
 // par défaut les requetes en js sont bloqués si elles ne sont pas faites depuis le meme site
 // ce comportement est configurable avec le middleware des cors.
 // par défaut il autorise l'accès depuis toutes les URLs

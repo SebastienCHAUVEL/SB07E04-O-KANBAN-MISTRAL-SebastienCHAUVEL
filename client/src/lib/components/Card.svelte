@@ -1,6 +1,7 @@
 <script>
-  import { Trash2, Pen } from "@lucide/svelte";
-  import { deleteCard, updateCard } from "../services/card.service";
+  import { Trash2, Pen, SpellCheck, Languages } from "@lucide/svelte";
+  import { deleteCard, updateCard } from "../services/card.service.js";
+  import { spellCheck } from "../services/common.service.js";
   import Markdown from "svelte-exmarkdown";
   import { form } from "../store/form.svelte";
   import ModalForm from "./modals/ModalForm.svelte";
@@ -41,6 +42,21 @@
         "Une erreur s'est produite lors de la suppression de la carte.";
     }
   };
+  const handleSpellCheck = async () => {
+    try {
+      const response = await spellCheck(card.content);
+
+      const updatedCard = await updateCard({
+        id: card.id,
+        content: response.text,
+      });
+
+      card.content = updatedCard.content;
+    } catch (e) {
+      form.error =
+        "Une erreur s'est produite lors de la correction de la carte.";
+    }
+  };
 </script>
 
 <div
@@ -64,49 +80,55 @@
     {@html card.content}
   </div>
   {#if authStore.user.role === "admin"}
-  <div
-    class={`flex gap-2 absolute right-2 items-center h-full ${hovered ? "opacity-100" : "opacity-0"}`}
-  >
-    <button
-      onclick={() => openModal(`edit-card-${card.id}`)}
-      class="bg-yellow-500 text-white h-[50px] px-2 py-1 rounded"
+    <div
+      class={`flex gap-2 absolute right-2 items-center h-full ${hovered ? "opacity-100" : "opacity-0"}`}
     >
-      <Pen />
-    </button>
-    <ModalForm
-      title="Modifier la carte"
-      modalId={`edit-card-${card.id}`}
-      msg=""
-    >
-      <div class="flex flex-col gap-2">
-        <form onsubmit={editCard}>
-          <textarea class="textarea" name="text">{card.content}</textarea>
-          <div class="flex justify-center">
-            <button class="bg-blue-500 text-white px-2 py-1 rounded"
-              >Modifier</button
-            >
-          </div>
-        </form>
-        <form method="dialog">
-          <div class="flex justify-center">
-            <button class="bg-red-500 text-white px-2 py-1 rounded"
-              >Annuler</button
-            >
-          </div>
-        </form>
-      </div>
-    </ModalForm>
-    <button
-      onclick={() => openModal(`confirm-delete-card-${card.id}`)}
-      class="bg-red-500 text-white px-2 py-1 rounded h-[50px]"
-    >
-      <Trash2 />
-    </button>
-    <ModalConfirm
-      modalId={`confirm-delete-card-${card.id}`}
-      msg="Confirmez que vous souhaitez supprimer cette carte"
-      handleConfirm={handleDeleteCard}
-    />
-  </div>
+      <button
+        onclick={handleSpellCheck}
+        class="bg-orange-500 text-white h-[50px] px-2 py-1 rounded"
+      >
+        <SpellCheck />
+      </button>
+      <button
+        onclick={() => openModal(`edit-card-${card.id}`)}
+        class="bg-yellow-500 text-white h-[50px] px-2 py-1 rounded"
+      >
+        <Pen />
+      </button>
+      <ModalForm
+        title="Modifier la carte"
+        modalId={`edit-card-${card.id}`}
+        msg=""
+      >
+        <div class="flex flex-col gap-2">
+          <form onsubmit={editCard}>
+            <textarea class="textarea" name="text">{card.content}</textarea>
+            <div class="flex justify-center">
+              <button class="bg-blue-500 text-white px-2 py-1 rounded"
+                >Modifier</button
+              >
+            </div>
+          </form>
+          <form method="dialog">
+            <div class="flex justify-center">
+              <button class="bg-red-500 text-white px-2 py-1 rounded"
+                >Annuler</button
+              >
+            </div>
+          </form>
+        </div>
+      </ModalForm>
+      <button
+        onclick={() => openModal(`confirm-delete-card-${card.id}`)}
+        class="bg-red-500 text-white px-2 py-1 rounded h-[50px]"
+      >
+        <Trash2 />
+      </button>
+      <ModalConfirm
+        modalId={`confirm-delete-card-${card.id}`}
+        msg="Confirmez que vous souhaitez supprimer cette carte"
+        handleConfirm={handleDeleteCard}
+      />
+    </div>
   {/if}
 </div>
