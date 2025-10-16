@@ -62,5 +62,5 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiaWF0IjoxNzYwNjAyMjU4LCJleHAiOjE3NjA2MTY2NTh9.zvW4kW4pAeCtDGczpzOroubD_mxO70i9lylAWAWLs9I
 
 {
-    "prompt": "En une phrase, quelle est la couleur du ciel ?"
+    "prompt": "Peux-tu corriger les fautes d'orthographe dans le texte suivant en me fournissant **uniquement** le texte corrigé dans ta réponse :  \"Coment modifié un commit aprs un git push ?\""
 }

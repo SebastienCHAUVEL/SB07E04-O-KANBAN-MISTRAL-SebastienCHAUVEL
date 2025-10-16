@@ -7,3 +7,10 @@ export function promptSchema(req, res, next) {
   });
   checkBody(promptSchema, req.body, res, next);
 }
+
+export function spellCheckSchema(req, res, next) {
+  const spellCheckSchema = Joi.object({
+    text: Joi.string().required(),
+  });
+  checkBody(spellCheckSchema, req.body, res, next);
+}
