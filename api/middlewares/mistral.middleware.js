@@ -14,3 +14,13 @@ export function spellCheckSchema(req, res, next) {
   });
   checkBody(spellCheckSchema, req.body, res, next);
 }
+
+export function translaterSchema(req, res, next) {
+  const translaterSchema = Joi.object({
+    text: Joi.string().required(),
+    lang: Joi.string()
+      .pattern(/^[a-zA-Z]{2}$/)
+      .required(),
+  });
+  checkBody(translaterSchema, req.body, res, next);
+}

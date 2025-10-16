@@ -15,8 +15,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "username": "username",
-    "password": "password"
+    "username": "admin",
+    "password": "admin"
 }
 
 ### récupération des lists
@@ -57,10 +57,11 @@ GET http://localhost:3000/users/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJpYXQiOjE3NjA1MzY3NTYsImV4cCI6MTc2MDU1MTE1Nn0.hQkaowOkgXHQW0v2mIs9P3RqnHJFQCf20X9HzaYav4k
 
 ### Mistral prompt
-POST http://localhost:3000/prompt
+POST http://localhost:3000/translate
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiaWF0IjoxNzYwNjAyMjU4LCJleHAiOjE3NjA2MTY2NTh9.zvW4kW4pAeCtDGczpzOroubD_mxO70i9lylAWAWLs9I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3NjA2MDk1MTQsImV4cCI6MTc2MDYyMzkxNH0.QacHRmRiJMTYJOUTCVweVkXDY-Fd6YO9UIW0Jc5bg6M
 
 {
-    "prompt": "Peux-tu corriger les fautes d'orthographe dans le texte suivant en me fournissant **uniquement** le texte corrigé dans ta réponse :  \"Coment modifié un commit aprs un git push ?\""
+    "text": "Coment modifié un comit apres un git push ?",
+    "lang": "es"
 }

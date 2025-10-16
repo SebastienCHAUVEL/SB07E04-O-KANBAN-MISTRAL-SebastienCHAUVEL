@@ -20,3 +20,15 @@ export async function spellChecker(req, res) {
 
   return res.json({ text: mistralResponse });
 }
+
+export async function translater(req, res) {
+  const { text, lang } = req.body;
+  console.log(text);
+
+  const mistralResponse = await askMistral(
+    `Peux-tu traduire le texte suivant en me fournissant **uniquement** le texte traduit dans ta réponse en langue "${lang}" : "${text}"`,
+    res
+  );
+
+  return res.json({ text: mistralResponse });
+}
